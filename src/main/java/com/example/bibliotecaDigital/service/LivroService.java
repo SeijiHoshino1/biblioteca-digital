@@ -2,7 +2,6 @@ package com.example.bibliotecaDigital.service;
 
 import com.example.bibliotecaDigital.model.Livro;
 import com.example.bibliotecaDigital.repository.JpaLivroRepository;
-import com.example.bibliotecaDigital.view.LivroView;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,7 +12,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class LivroService extends LivroView {
+public class LivroService {
 
     private final JpaLivroRepository jpaLivroRepository;
 
