@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -20,8 +19,8 @@ public class LivroService {
         return jpaLivroRepository.findAll();
     }
 
-    public Optional<Livro> findById(UUID uuid) {
-        return jpaLivroRepository.findById(uuid);
+    public Optional<Livro> findById(Long id) {
+        return jpaLivroRepository.findById(id);
     }
 
     @Transactional
@@ -30,21 +29,19 @@ public class LivroService {
     }
 
     @Transactional
-    public Livro update(UUID uuid, Livro livro) {
-        jpaLivroRepository.findById(uuid);
+    public Livro update(Long id, Livro livro) {
+        Livro livroUpdate = jpaLivroRepository.findById(id).orElseThrow();
 
-        livro.setTitulo(livro.getTitulo());
-        livro.setAutor(livro.getAutor());
-        livro.setCategoria(livro.getCategoria());
-        livro.setQtd_paginas(livro.getQtd_paginas());
+        livroUpdate.setTitulo(livro.getTitulo());
+        livroUpdate.setAutor(livro.getAutor());
+        livroUpdate.setCategoria(livro.getCategoria());
+        livroUpdate.setQtd_paginas(livro.getQtd_paginas());
 
-        jpaLivroRepository.save(livro);
-
-        return livro;
+        return jpaLivroRepository.save(livroUpdate);
     }
 
     @Transactional
-    public void delete(Livro livro) {
-        jpaLivroRepository.delete(livro);
+    public void delete(Long id) {
+        jpaLivroRepository.deleteById(id);
     }
 }
