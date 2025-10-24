@@ -2,21 +2,23 @@ package com.example.bibliotecaDigital.controller;
 
 import com.example.bibliotecaDigital.model.Livro;
 import com.example.bibliotecaDigital.service.LivroService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/livro")
-@RequiredArgsConstructor
 public class LivroController {
 
     private final LivroService service;
+
+    @Autowired
+    public LivroController(LivroService service) {
+        this.service = service;
+    }
 
     @PostMapping
     public ResponseEntity<Livro> save(@RequestBody Livro livro) {
@@ -28,18 +30,18 @@ public class LivroController {
         return ResponseEntity.ok(service.findAll());
     }
 
-    @GetMapping("/{uuid}")
-    public ResponseEntity<Optional<Livro>> findById(@PathVariable UUID uuid) {
-        return ResponseEntity.ok(service.findById(uuid));
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<Livro>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(service.findById(id));
     }
 
-    @PutMapping("/{uuid}")
-    public ResponseEntity<Livro> update(@PathVariable UUID uuid, @RequestBody Livro livro) {
-        return ResponseEntity.ok(service.update(uuid, livro));
+    @PutMapping("/{id}")
+    public ResponseEntity<Livro> update(@PathVariable Long id, @RequestBody Livro livro) {
+        return ResponseEntity.ok(service.update(id, livro));
     }
 
-    @DeleteMapping
-    public void delete(@RequestBody Livro livro) {
-        service.delete(livro);
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        service.delete(id);
     }
 }
